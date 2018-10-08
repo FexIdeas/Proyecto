@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Proyecto.Models.AspNetRoles>
+
+@{
+	ViewBag.Title = "Roles";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
+					<h5>Lista de Roles</h5>
+					<div class="ibox-tools">
+						@Html.ActionLink("Nuevo", "Create", null, new { @class = "btn btn-primary btn-sm" })
+					</div>
+				</div>
+				<div class="ibox-content">
+
+					<table class="table table-striped initdataTable">
+
+						<thead>
+							<tr>
+								<th>Rol</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var item in Model)
+							{
+								<tr>
+									<td>@Html.DisplayFor(modelItem => item.Name)</td>
+									<td>
+										@Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+										@Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+										@Html.ActionLink("Permisos", "Permisos", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+									</td>
+								</tr>
+							}
+						</tbody>
+
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+@section Styles {
+	@Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+}
+
+@section Scripts {
+	@Scripts.Render("~/plugins/dataTables")
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			$('.initdataTable').DataTable({
+				pageLength: 25,
+				dom: '<"html5buttons"B>lTfgitp',
+				language: {
+					"url": "../locales/DatatableSpanish.json"
+				},
+				buttons: [
+					{ extend: 'copy' },
+					{ extend: 'csv' },
+					{ extend: 'excel', title: 'ExampleFile' },
+					{ extend: 'pdf', title: 'ExampleFile' },
+
+					{
+						extend: 'print',
+						customize: function (win) {
+							$(win.document.body).addClass('white-bg');
+							$(win.document.body).css('font-size', '10px');
+
+							$(win.document.body).find('table')
+								.addClass('compact')
+								.css('font-size', 'inherit');
+						}
+					}
+				]
+
+			});
+
+
+
+		});
+
+	</script>
+}

@@ -1,0 +1,147 @@
+﻿@model Proyecto.Models.PermisosVM
+
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
+					<h5>Editar Rol @ViewBag.NombreRol</h5>
+				</div>
+				<div class="ibox-content">
+					<div class="form-horizontal">
+
+						@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formTree" }))
+						{
+							@Html.AntiForgeryToken()
+							<div class="form-group">
+								<div id="jstree">
+									<ul>
+										@Proyecto.HMTLHelperExtensions.RenderTreeMenu(Model.Menu)
+									</ul>
+								</div>
+
+							</div>
+							@Html.HiddenFor(r => r.idRol);
+						}
+						<br />
+						<div class="form-group">
+							<div class="col-md-12">
+								<span id="btnGuardar" value="Crear" class="btn btn-primary">Crear</span>
+								@Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-white" })
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+@section Styles {
+	@Styles.Render("~/Content/plugins/jsTree")
+}
+
+@section Scripts {
+	@Scripts.Render("~/plugins/jsTree")
+	@Scripts.Render("~/plugins/validate")
+
+	<script type="text/javascript">
+	        $(document).ready(function () {
+            // 6 create an instance when the DOM is ready
+            $('#jstree').jstree({
+                "core": {
+                    "themes": {
+                        "variant": "large"
+                    }
+                },
+                "checkbox": {
+                    "keep_selected_style": false
+                },
+                "plugins": ["wholerow", "checkbox"]
+            });
+
+            // 7 bind to events triggered on the tree
+            $('#jstree').on("changed.jstree", function (e, data) {
+                //debugger
+                console.log(data.selected);
+            });
+
+            GetPermisosRol("@Model.idRol");
+		});
+
+		function GetPathApp(url) {
+			//debugger
+			var fullPathApp = window.location.origin;
+			//fullPathApp = fullPathApp.toLowerCase().replace('home/index', '');
+			return fullPathApp + url;
+		}
+
+		//GetPermisosRol
+		function GetPermisosRol(idRol) {
+			//debugger
+			var _url = GetPathApp("/Roles/GetPermisosRol/" + idRol);
+
+			$.ajax({
+				url: _url,
+				type: "GET",
+				//data: { "idRol": idRol },
+				beforeSend: function (xhr) {
+				},
+				success: function (result) {
+					$('#jstree').jstree().select_node(result)
+				},
+				error: function () {
+				}
+			});
+		}
+
+		//Click "Guardar"
+		$("#btnGuardar").unbind("click").click(function () {
+			debugger
+			$('#formTree').submit();
+		});
+
+		//Submit
+		$('#formTree').submit(function () {
+			debugger
+
+			var _data = {
+				__RequestVerificationToken: $("input[name=__RequestVerificationToken]").val(),
+				idRol: $("#idRol").val(),
+				permisos: $('#jstree').jstree().get_selected()//get_bottom_selected()
+			}
+
+			if ($(this).valid()) {
+				$.ajax({
+					url: this.action,
+					type: this.method,
+					data: _data,//$(this).serialize(),
+					beforeSend: function (xhr) {
+					},
+					success: function (result) {
+						if (result.ok == 1) {
+							window.location.href = window.location.href;
+						}
+
+					},
+					error: function () {
+					}
+				});
+			}
+
+			return false;
+		});
+	</script>
+}

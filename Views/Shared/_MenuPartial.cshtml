@@ -1,0 +1,24 @@
+﻿@{
+    List<Proyecto.Models.MenuVM>
+	menus;
+	var aux = Session["Menu"] as List<Proyecto.Models.MenuVM>;
+	if (Session["Menu"] == null || aux.Count == 0)
+	{
+		String user = User.Identity.Name;
+		var menuClien = new Proyecto.Controllers.MenuController();
+		if (Session["UserName"] != null)
+		{
+			Session["Menu"] = menuClien.GetMenu(Session["UserName"].ToString());
+			Session["Permisos"] = menuClien.GetPermisos(Session["UserName"].ToString());
+		}
+		else
+		{
+			Session["Menu"] = menuClien.GetMenu(user);
+			Session["Permisos"] = menuClien.GetPermisos(user);
+		}
+	}
+	menus = Session["Menu"] as List<Proyecto.Models.MenuVM>;
+}
+@Proyecto.HMTLHelperExtensions.RenderMenu(menus)
+
+

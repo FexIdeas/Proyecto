@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Proyecto.Models.AspNetUsers>
+@using Proyecto.Models
+
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
+					<h5>Lista de Usuarios</h5>
+					<div class="ibox-tools">
+						@Html.ActionLink("Nuevo", "Create", null, new { @class = "btn btn-primary btn-sm" })
+					</div>
+				</div>
+				<div class="ibox-content">
+
+					<table class="table table-striped initdataTable">
+						<thead>
+							<tr>
+								<th>Nombre de Usuario</th>
+								<th>Nombre</th>
+								<th>Apellido</th>
+								<th>Rol</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var item in Model)
+							{
+								<tr>
+									<td>@Html.DisplayFor(modelItem => item.UserName)</td>
+									<td>@item.FirstName</td>
+									<td>@item.LastName</td>
+									<td>@Html.DisplayFor(modelItem => item.AspNetRoles.FirstOrDefault().Name)</td>
+									<td>
+										@Html.ActionLink("Detalles", "Details", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+										@Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+										@Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+										@Html.ActionLink("Resetear Contraseña", "ResetPassword", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+										@Html.ActionLink("Roles", "SetRoles", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+										
+									</td>
+								</tr>
+							}
+						</tbody>
+
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+@section Styles {
+	@Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+}
+
+@section Scripts {
+	@Scripts.Render("~/plugins/dataTables")
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			$('.initdataTable').DataTable({
+				pageLength: 25,
+				dom: '<"html5buttons"B>lTfgitp',
+				language: {
+					"url": "../locales/DatatableSpanish.json"
+				},
+				buttons: [
+					{ extend: 'copy' },
+					{ extend: 'csv' },
+					{ extend: 'excel', title: 'ExampleFile' },
+					{ extend: 'pdf', title: 'ExampleFile' },
+
+					{
+						extend: 'print',
+						customize: function (win) {
+							$(win.document.body).addClass('white-bg');
+							$(win.document.body).css('font-size', '10px');
+
+							$(win.document.body).find('table')
+								.addClass('compact')
+								.css('font-size', 'inherit');
+						}
+					}
+				]
+
+			});
+
+
+
+		});
+
+	</script>
+}

@@ -1,0 +1,47 @@
+﻿@model Proyecto.Models.AspNetRoles
+
+@{
+	ViewBag.Title = "Delete";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-title">
+					<h5>Eliminar Rol</h5>
+				</div>
+				<div class="ibox-content">
+					<h4 class="text-danger">Estas seguro que lo queres eliminar?</h4>
+					<dl class="dl-horizontal">
+						<dt>
+							@Html.DisplayNameFor(model => model.Name)
+						</dt>
+
+						<dd>
+							@Html.DisplayFor(model => model.Name)
+						</dd>
+
+					</dl>
+
+					@using (Html.BeginForm())
+					{
+						@Html.AntiForgeryToken()
+
+						<div class="form-actions no-color">
+							<input type="submit" value="Eliminar" class="btn btn-danger" />
+							@Html.ActionLink("Volver a Listado", "Index", null, new { @class = "btn btn-white" })
+						</div>
+					}
+
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

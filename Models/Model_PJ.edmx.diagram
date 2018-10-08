@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4a4caa97c4e74332ada6de0f7b567df0" Name="Diagram1">
+        <EntityTypeShape EntityType="ComputosPJModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComputosPJModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComputosPJModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ComputosPJModel.AspNetUsers" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="ComputosPJModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="ComputosPJModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="ComputosPJModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ComputosPJModel.Accion" Width="1.5" PointX="0.75" PointY="9.25" />
+        <EntityTypeShape EntityType="ComputosPJModel.Menu" Width="1.5" PointX="3" PointY="11.25" />
+        <EntityTypeShape EntityType="ComputosPJModel.MenuAspNetRoles" Width="1.5" PointX="5.25" PointY="7.625" />
+        <EntityTypeShape EntityType="ComputosPJModel.MenuAspNetRolesAccion" Width="1.5" PointX="3" PointY="8.375" />
+        <AssociationConnector Association="ComputosPJModel.FK_MenuAspNetRolesAccion_Accion" />
+        <AssociationConnector Association="ComputosPJModel.FK_MenuAspNetRoles_AspNetRoles" />
+        <AssociationConnector Association="ComputosPJModel.FK_Menu_Menu" />
+        <AssociationConnector Association="ComputosPJModel.FK_MenuAspNetRoles_Menu" />
+        <AssociationConnector Association="ComputosPJModel.FK_MenuAspNetRolesAccion_MenuAspNetRoles" />
+        <AssociationConnector Association="ComputosPJModel.AspNetMenuAccion" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

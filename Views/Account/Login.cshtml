@@ -1,0 +1,59 @@
+﻿@using Proyecto.Models
+@model LoginViewModel
+@{
+	ViewBag.Title = "Iniciar sesión";
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Proyecto | Login</title>
+
+	<link href="~/Content/bootstrap.min.css" rel="stylesheet">
+	<link href="~/Fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+	<link href="~/Content/animate.css" rel="stylesheet">
+	<link href="~/Content/style.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+	<div class="middle-box text-center loginscreen  animated fadeInDown">
+		<div>
+			<h3>Bienvenidos compañeros/as</h3>
+			<p>
+				Aquí podemos escribir algo como introducción, o poner datos de contacto para generar usuarios.
+			</p>
+			@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "m-t", role = "form" }))
+			{
+				@Html.AntiForgeryToken()
+				<hr />
+				@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+				<div class="form-group">
+					@Html.TextBoxFor(m => m.UserName, new { placeholder = "Usuario", @class = "form-control" })
+					@Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+
+				</div>
+				<div class="form-group">
+					@Html.PasswordFor(m => m.Password, new { placeholder = "Contraseña", @class = "form-control" })
+					@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Iniciar sesión" class="btn btn-primary block full-width m-b " />
+
+				</div>
+			}
+			<p class="m-t"> <small>Proyecto PJ &copy; 2019</small> </p>
+		</div>
+	</div>
+
+</body>
+
+</html>
+
+
